@@ -26,7 +26,7 @@ public class PawTrackLogin extends JFrame {
     private static final Color COLOR_PLACEHOLDER = new Color(156, 163, 175);
     private static final Color COLOR_ACCENT = new Color(139, 92, 246);
 
-    private static final String BACKGROUND_IMAGE_PATH = "image/family.png";
+    private static final String BACKGROUND_IMAGE_PATH = "/image/family.png";
 
     private ModernGradientButton loginButton;
 
@@ -67,7 +67,7 @@ public class PawTrackLogin extends JFrame {
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        CircularImageComponent logoLabel = new CircularImageComponent("image/Logo.png");
+        CircularImageComponent logoLabel = new CircularImageComponent("/image/Logo.png");
         logoLabel.setPreferredSize(new Dimension(120, 120));
         logoLabel.setMinimumSize(new Dimension(96, 96));
         gbc.gridy = 0;
@@ -581,9 +581,6 @@ public class PawTrackLogin extends JFrame {
     }
 }
 
-//
-// HELPER CLASSES
-//
 
 class BackgroundPanel extends JPanel {
     private Image backgroundImage;
@@ -825,13 +822,11 @@ class CircularImageComponent extends JLabel {
 
     private void loadImage(String imagePath) {
         try {
-            // Correctly form the classpath path by ensuring it starts with /
+
             String resourcePath = "/" + imagePath;
-
             java.net.URL imageUrl = getClass().getResource(resourcePath);
-
             if (imageUrl != null) {
-                this.originalImage = ImageIO.read(imageUrl); // Load stream from resource
+                this.originalImage = ImageIO.read(imageUrl);
                 repaint();
             } else {
                 setText("Image not found");
