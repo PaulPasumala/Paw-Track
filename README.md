@@ -1,173 +1,107 @@
 🐾 PawTrack Management System 2.0
 
-Project Overview
+<p align="center">
+A modern, feature-rich desktop application built entirely with Java Swing for managing pet adoption, veterinary appointments, and internal administration.
+</p>
 
-PawTrack Management System is a robust desktop application built with Java Swing that provides a modern, full-featured platform for managing pet adoption, vet appointments, inventory, and user accounts. The system is designed to connect abandoned and surrendered pets with responsible adopters through an intuitive, aesthetic user interface.
+✨ Features and Highlights
 
-This project uses a MySQL database for persistent storage and leverages advanced Java Swing techniques for a high-quality, responsive desktop UI.
+PawTrack stands out with its modern, custom-drawn Java Swing UI, featuring gradients, dynamic shadows, and animations to deliver a professional desktop experience.
 
-🛠️ Technology Stack
+Feature Area
 
-Language: Java (JDK 17+)
+Key Modules
 
-Frontend: Java Swing with custom rendering, gradients, and animations
+Highlight
 
-Database: MySQL (Remote Aiven Cloud instance specified in DBConnector.java)
-
-Dependencies: Standard Java libraries (A separate MySQL Connector/J JAR is required for database connectivity).
-
-🚀 Getting Started
-
-1. Database Setup (Crucial!)
-
-This application requires a running MySQL instance and relies on the credentials configured in src/DBConnector.java.
-
-Configure DBConnector.java: Update the following fields in src/DBConnector.java to match your local or cloud MySQL database (Aiven is currently configured):
-
-// src/DBConnector.java
-private static final String DB_HOST = "your_mysql_host";
-private static final String DB_PORT = "your_port";
-private static final String DB_NAME = "your_database_name";
-private static final String DB_USER = "your_username";
-private static final String DB_PASS = "your_password"; // <-- UPDATE THIS
-// ...
-
-
-Create Tables: You must create the following tables in your configured database.
-
-Table Name
-
-Purpose
-
-Key Columns
-
-user_accounts
-
-Stores login credentials and profile info.
-
-username, password, full_name, email
-
-pets_accounts
-
-Stores details for pets available for adoption.
-
-name, status, image (BLOB)
-
-adoption_applications
-
-(Future Use) For detailed adoption form submissions.
-
-N/A (Needs implementation)
-
-Note: The PawManagement panel relies directly on the pets_accounts table to display images and status.
-
-Add MySQL Connector/J: Ensure the MySQL JDBC driver JAR file is added to your project's build path/classpath.
-
-2. Running the Application
-
-Compile: Compile all .java files located in the src folder.
-
-Run: Execute the main method in src/PawTrackLogin.java to start the application.
-
-💡 Key Features and Components
-
-The system is modular, with each feature implemented as a dedicated Java class and integrated into the main Dashboard.java using a CardLayout.
-
-Feature Module
-
-Class Name
-
-Description
-
-Status
-
-User Authentication
-
-PawTrackLogin.java, CreateAccount.java
-
-Handles user login, sign-up, and password recovery (simulated database access).
-
-Functional
-
-Main Dashboard
+Unified Dashboard
 
 Dashboard.java
 
-Core navigation, animated sidebar, global header, and the main card switcher.
+Single-window application with an animated sidebar and header, acting as the control center for all features.
 
-Functional
+Predictive Search
+
+Dashboard.java
+
+Intelligent search implemented across the header for quick lookup of pets, categories, or functional keywords (e.g., searching "vet" navigates to the Appointment scheduler).
 
 Pet Management
 
 PawManagement.java
 
-Displays adoptable pets in modern cards, fetching status and images from the database.
-
-Functional
-
-Pet Adoption Form
-
-PetAdoptionForm.java, AdoptionForm.java
-
-Detailed forms for prospective adopters and registering new pets.
-
-Functional (DB submission logic in AdoptionForm.java)
-
-Vet Appointments
-
-VetAppointment.java
-
-Comprehensive form for booking pet appointments with rotating vet profiles.
-
-Functional
+Displays adoptable animals in modern, responsive cards, with data fetched directly from the MySQL database.
 
 E-Commerce/Shop
 
 PetShop.java
 
-Full-screen marketplace simulation with inventory, cart management, and checkout logic.
+A fully contained virtual marketplace simulator with inventory, filter management, and a robust cart system.
 
-Functional
+Core Functions
 
-Information
+AdoptionForm.java, VetAppointment.java
 
-AboutUs.java, TriviaApp.java
+Dedicated, detailed modules for submitting new pet profiles for adoption and scheduling vet visits with professional vet profiles.
 
-Dedicated panels for team information and pet trivia/facts.
+Security & Accounts
 
-Functional
+PawTrackLogin.java, CreateAccount.java
 
-User Profile
+Secure login and account creation with database integration and smooth UI/UX.
 
-UserProfile.java
+🚀 Getting Started
 
-Integrated module for viewing and editing user information and profile picture.
+To run this application, you need Java installed and a configured MySQL database.
 
-Functional
+1. Prerequisites
 
-Search Functionality
+Java Development Kit (JDK 17 or higher)
 
-Dashboard.java
+MySQL Server (Local or Cloud instance)
 
-Implements a Unified Predictive Search across pet categories and module features.
+MySQL Connector/J (JDBC Driver JAR file). You must download this file and add it to your project's classpath/build path.
 
-Functional
+2. Database Configuration
 
-📁 File Structure
+The application uses the centralized DBConnector.java file to establish a database connection.
 
-The project follows a single src directory structure:
+Update Credentials: Edit src/DBConnector.java with your database connection information:
 
-PawTrack/
-└── src/
-    ├── AboutUs.java             # Team Information Panel
-    ├── AdoptionForm.java        # Pet Registration Form (DB submission)
-    ├── DBConnector.java         # Database Configuration (Requires Update)
-    ├── Dashboard.java           # Primary application window and navigation (FIXED)
-    ├── PawManagement.java       # Pet Listing Grid (DB Fetching)
-    ├── PawTrackLogin.java       # Main Login Screen
-    ├── PetAdoptionForm.java     # Detailed Adoption Application (Placeholder logic)
-    ├── PetShop.java             # E-commerce Module
-    ├── TriviaApp.java           # Trivia/Facts Module
-    ├── UserProfile.java         # Profile Management Module
-    ├── VetAppointment.java      # Veterinary Appointment Module
-    └── ... (other utility classes)
+// src/DBConnector.java
+
+private static final String DB_HOST = "your_mysql_host";
+private static final String DB_PORT = "your_port"; 
+private static final String DB_NAME = "your_database_name"; 
+private static final String DB_USER = "your_username"; 
+private static final String DB_PASS = "YOUR_SECURE_PASSWORD"; // ⚠️ MUST BE UPDATED
+
+// ...
+
+
+Create Necessary Tables: The following tables are minimally required for core functionality to work (especially PawManagement):
+
+-- Table for User Accounts
+CREATE TABLE user_accounts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    contact_number VARCHAR(20),
+    email VARCHAR(100) UNIQUE
+);
+
+-- Table for Pet Listings/Management
+CREATE TABLE pets_accounts (
+    pet_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    gender VARCHAR(10),
+    age VARCHAR(20),
+    breed VARCHAR(100),
+    health_status VARCHAR(100),
+    contact_number VARCHAR(20),
+    personal_traits TEXT,
+    reason_for_adoption TEXT,
+    image LONGBLOB, -- Used to store pet images
+    status VARCHAR(50) DEFAULT 'available' 
+);
